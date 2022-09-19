@@ -77,14 +77,28 @@ func (n *Node) VirtualMachine(vmid int) (*VirtualMachine, error) {
 		return nil, err
 	}
 
-	if err := n.client.Get(fmt.Sprintf("/nodes/%s/qemu/%d/agent/network-get-interfaces", n.Name, vmid), &vm.NetworkConfig); err != nil {
-		fmt.Println(err.Error())
+	//vm.VirtualMachineConfig = &vmconf
+	return vm, nil
+}
+
+func (n *Node) GetVmInterface(vmid int) (*NetworkConfig, error) {
+	var network *NetworkConfig
+
+	if err := n.client.Get(fmt.Sprintf("/nodes/%s/qemu/%d/agent/network-get-interfaces", n.Name, vmid), &network); err != nil {
 		return nil, err
 	}
 
-	//vm.VirtualMachineConfig = &vmconf
+	return network, nil
+}
 
-	return vm, nil
+func (n *Node) GetVmHostname(vmid int) (*HostnameConfig, error) {
+	var hName *HostnameConfig
+
+	if err := n.client.Get(fmt.Sprintf("/nodes/%s/qemu/%d/agent/get-host-name", n.Name, vmid), &hName); err != nil {
+		return nil, err
+	}
+
+	return hName, nil
 }
 
 func (n *Node) Containers() (c Containers, err error) {

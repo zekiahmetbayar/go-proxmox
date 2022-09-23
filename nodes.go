@@ -91,6 +91,16 @@ func (n *Node) GetVmInterface(vmid int) (*NetworkConfig, error) {
 	return network, nil
 }
 
+func (n *Node) GetVmOSName(vmid int) (*OSConfig, error) {
+	var os *OSConfig
+
+	if err := n.client.Get(fmt.Sprintf("/nodes/%s/qemu/%d/agent/get-osinfo", n.Name, vmid), &os); err != nil {
+		return nil, err
+	}
+
+	return os, nil
+}
+
 func (n *Node) GetVmHostname(vmid int) (*HostnameConfig, error) {
 	var hName *HostnameConfig
 

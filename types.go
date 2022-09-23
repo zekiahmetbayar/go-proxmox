@@ -208,6 +208,22 @@ type HostnameConfig struct {
 type HRes struct {
 	HostName string `json:"host-name"`
 }
+
+type OSConfig struct {
+	Result OSResult `json:"result"`
+}
+
+type OSResult struct {
+	PrettyName    string `json:"pretty-name"`
+	VersionID     string `json:"version-id"`
+	Machine       string `json:"machine"`
+	KernelRelease string `json:"kernel-release"`
+	KernelVersion string `json:"kernel-version"`
+	Name          string `json:"name"`
+	ID            string `json:"id"`
+	Version       string `json:"version"`
+}
+
 type Node struct {
 	Name       string
 	client     *Client
